@@ -1,5 +1,4 @@
 // TODO: environment variable
-// TODO: filter foul words
 // TODO: add date time with message
 
 const express = require("express");
@@ -8,6 +7,8 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const Filter = require("bad-words");
+const filter = new Filter();
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
@@ -20,6 +21,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("chat message", (msg) => {
+    msg = filter.clean(msg);
     io.emit("chat message", msg);
   });
 });
