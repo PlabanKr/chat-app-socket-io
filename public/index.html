@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
+    />
+    <style>
+      body {
+        height: 100vh;
+        background-color: var(--bs-gray-dark);
+        color: white;
+      }
+      #messages {
+        margin-top: 90px;
+        margin-bottom: 90px;
+        min-height: 75vh;
+      }
+      li {
+        margin: 5px;
+        list-style: none;
+        padding: 10px 7px;
+        background-color: var(--bs-gray);
+        border-radius: 5px;
+      }
+    </style>
+    <title>Chat App</title>
+  </head>
+  <body>
+    <nav
+      class="navbar fixed-top navbar-expand-md navbar-dark bg-dark"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Chat App</a>
+      </div>
+    </nav>
+    <div class="container">
+      <ul id="messages"></ul>
+    </div>
+    <nav
+      class="navbar fixed-bottom navbar-expand-md navbar-dark bg-dark"
+    >
+      <div class="container">
+        <form class="input-group mb-3" id="form" action="">
+          <input
+            type="text"
+            id="input"
+            class="form-control"
+            placeholder="Enter Message"
+            aria-label="Message typing box"
+            autocomplete="off"
+          />
+          <button class="btn btn-success">
+            <i class="bi bi-send"></i>
+          </button>
+        </form>
+      </div>
+    </nav>
+
+    <script
+      type="text/javascript"
+      src="/socket.io/socket.io.js"
+    ></script>
+    <script>
+      var socket = io();
+
+      var messages = document.getElementById("messages");
+      var form = document.getElementById("form");
+      var inputBox = document.getElementById("input");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        if (inputBox.value) {
+          socket.emit("chat message", input.value);
+          input.value = "";
+        }
+      });
+
+      socket.on("chat message", (msg) => {
+        let item = document.createElement("li");
+        item.textContent = msg;
+
+        messages.appendChild(item);
+        if (messages.childNodes.length > 3) {
+          window.scrollTo(0, document.body.scrollHeight);
+        }
+      });
+    </script>
+  </body>
+</html>
