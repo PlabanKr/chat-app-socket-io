@@ -4,7 +4,7 @@
   "description": "Chat app where your identity is anonymous",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": "Plaban Kumar Mondal",
   "license": "MIT",
@@ -12,5 +12,8 @@
     "bad-words": "^3.0.4",
     "express": "^4.17.2",
     "socket.io": "^4.4.0"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
