@@ -62,7 +62,7 @@
             aria-label="Message typing box"
             autocomplete="off"
           />
-          <button class="btn btn-success">
+          <button id="send-btn" class="btn btn-success">
             <i class="bi bi-send"></i>
           </button>
         </form>
@@ -79,6 +79,7 @@
       var messages = document.getElementById("messages");
       var form = document.getElementById("form");
       var inputBox = document.getElementById("input");
+      var sendBtn = document.getElementById("send-btn");
 
       form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -86,6 +87,10 @@
         if (inputBox.value) {
           socket.emit("chat message", input.value);
           input.value = "";
+          sendBtn.disabled = true;
+          setTimeout(() => {
+            sendBtn.disabled = false;
+          }, 15000);
         }
       });
 
